@@ -2,6 +2,8 @@
 
 A powerful Model Context Protocol (MCP) server for creating interactive data visualizations using matplotlib. This server provides comprehensive visualization tools including relationship graphs, scatter plots, 3D visualizations, and more.
 
+![](./demov3.png)
+
 ## Features
 
 - 🔗 **Relationship Graphs**: Create network diagrams to visualize connections between entities
@@ -53,6 +55,8 @@ python visualization_server.py
 The server provides several visualization tools that can be called via MCP protocol:
 
 ### 1. Relationship Graph
+
+![](./demo2.png)
 
 Create network diagrams to show relationships between entities:
 
@@ -112,6 +116,8 @@ categories = ["Type A", "Type A", "Type B", "Type B", "Type C", "Type C"]
 - `title`, `x_label`, `y_label`: Chart labels
 
 ### 4. 3D Visualization
+
+![](./demo1.png)
 
 Create 3D plots with multiple visualization types:
 
