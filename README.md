@@ -17,6 +17,11 @@ A powerful Model Context Protocol (MCP) server for creating interactive data vis
 ### Prerequisites
 
 ```bash
+
+$ python3 -m venv .venv --upgrade-deps 
+
+$ source .venv/bin/activate
+
 $ pip install "mcp[cli]" httpx
 
 $ pip install   matplotlib numpy pandas networkx
