@@ -220,7 +220,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - `networkx`: Graph/network visualization
 - `numpy`: Numerical computations
 - `pandas`: Data manipulation
-- `fastmcp`: MCP server framework
+- `mcp`: MCP server framework
 
 ## Roadmap
 
@@ -234,7 +234,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/yourusername/visualization-mcp-server/issues) page
+1. Check the [Issues](https://github.com/xlisp/visualization-mcp-server/issues) page
 2. Create a new issue with detailed description
 3. Include sample data and error messages
 
