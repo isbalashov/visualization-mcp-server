@@ -33,6 +33,18 @@ python visualization_server.py
 
 ## Usage
 
+## 1. Cladue Desktop Client Config
+
+```json
+    "visualization": {
+      "command": "/Users/clojure/Desktop/visualization-mcp-server/.venv/bin/python",
+      "args": [
+        "/Users/clojure/Desktop/visualization-mcp-server/visualization_server.py"
+      ]
+    }
+
+```
+
 The server provides several visualization tools that can be called via MCP protocol:
 
 ### 1. Relationship Graph
