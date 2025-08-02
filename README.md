@@ -33,7 +33,7 @@ $ pip install   matplotlib numpy pandas networkx
 ### Clone and Run
 
 ```bash
-git clone https://github.com/yourusername/visualization-mcp-server.git
+git clone https://github.com/xlisp/visualization-mcp-server.git
 cd visualization-mcp-server
 python visualization_server.py
 ```
