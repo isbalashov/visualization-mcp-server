@@ -39,4 +39,7 @@ Repository = "https://github.com/isbalashov/visualization-mcp-server"
 Issues = "https://github.com/isbalashov/visualization-mcp-server/issues"
 
 [project.scripts]
-visualization-mcp-server = "visualization_server:main"
+visualization-mcp-server = "visualization_mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/visualization_mcp_server"]
