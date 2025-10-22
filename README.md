@@ -10,8 +10,7 @@ A powerful Model Context Protocol (MCP) server for creating interactive data vis
 - 📊 **Scatter Plots**: Basic and classification scatter plots with customizable styling
 - 🌐 **3D Visualizations**: Support for 3D scatter plots, surface plots, and wireframes
 - 📈 **Statistical Charts**: Histograms, line plots, and heatmaps
-- 💾 **Auto-save**: Automatically saves high-resolution images to temporary directory
-- 🖼️ **Live Display**: Shows plots in interactive matplotlib windows
+- �️ **Direct Image Return**: Returns plots as PNG images directly to AI (no file system needed)
 - 🎨 **Customizable**: Extensive styling options for colors, labels, and layouts
 
 ## Installation
@@ -154,23 +153,13 @@ z_data = [3, 1, 4, 2, 5]
 
 ## Output
 
-Each visualization function:
-1. **Displays** the plot in an interactive matplotlib window
-2. **Saves** a high-resolution PNG file to the system temporary directory
-3. **Returns** the file path where the image was saved
+Each visualization function returns the plot as an `Image` object containing PNG data that can be directly displayed by the AI assistant. The plots are:
 
-Example output:
-```
-"Graph saved to: /tmp/relationship_graph_20250802_143022.png and displayed"
-```
+- **High-resolution**: Generated at 300 DPI for crisp, clear images
+- **Memory-efficient**: Returned as bytes without requiring file system access
+- **Instantly available**: No need to manage temporary files or cleanup
 
-## File Management
-
-- Images are saved with timestamps to avoid conflicts
-- Files are stored in the system temporary directory:
-  - **Windows**: `C:\Users\username\AppData\Local\Temp\`
-  - **macOS/Linux**: `/tmp/`
-- High resolution (300 DPI) PNG format
+The Image object follows the MCP (Model Context Protocol) media helper specification, making it compatible with AI assistants that support image display.
 
 ## MCP Integration
 

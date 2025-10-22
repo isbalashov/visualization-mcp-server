@@ -6,24 +6,28 @@ import pandas as pd
 import networkx as nx
 from typing import Any, List, Optional, Union
 import json
-import tempfile
-import os
+import io
+import base64
 from datetime import datetime
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Image
 
 # Initialize FastMCP server
 mcp = FastMCP("visualization")
 
-def save_and_show_plot(title: str = "plot") -> str:
-    """Save the plot to a temporary directory and display it."""
-    temp_dir = tempfile.gettempdir()
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{title}_{timestamp}.png"
-    filepath = os.path.join(temp_dir, filename)
+def get_plot_as_image(title: str = "plot") -> Image:
+    """Convert the current plot to base64-encoded PNG and return as Image."""
+    # Save plot to bytes buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', dpi=300, bbox_inches='tight')
+    buf.seek(0)
     
-    plt.savefig(filepath, format='png', dpi=300, bbox_inches='tight')
-    plt.show()
-    return f"Plot saved to: {filepath} and displayed"
+    # Get bytes data
+    image_bytes = buf.read()
+    buf.close()
+    plt.close()
+    
+    # Return as Image
+    return Image(data=image_bytes, format="png")
 
 @mcp.tool()
 async def create_relationship_graph(
@@ -32,7 +36,7 @@ async def create_relationship_graph(
     title: str = "Relationship Graph",
     node_size: int = 1000,
     font_size: int = 12
-) -> str:
+) -> Image:
     """Create a directed relationship graph."""
     try:
         G = nx.DiGraph()
@@ -51,10 +55,11 @@ async def create_relationship_graph(
         plt.axis('off')
         plt.tight_layout()
         
-        return save_and_show_plot("relationship_graph")
+        return get_plot_as_image("relationship_graph")
         
     except Exception as e:
-        return f"Error creating relationship graph: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating relationship graph: {str(e)}")
 
 @mcp.tool()
 async def create_scatter_plot(
@@ -66,7 +71,7 @@ async def create_scatter_plot(
     x_label: str = "X-axis",
     y_label: str = "Y-axis",
     size: int = 50
-) -> str:
+) -> Image:
     """Create a scatter plot."""
     try:
         plt.figure(figsize=(10, 8))
@@ -88,10 +93,11 @@ async def create_scatter_plot(
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        return save_and_show_plot("scatter_plot")
+        return get_plot_as_image("scatter_plot")
         
     except Exception as e:
-        return f"Error creating scatter plot: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating scatter plot: {str(e)}")
 
 @mcp.tool()
 async def create_3d_plot(
@@ -103,7 +109,7 @@ async def create_3d_plot(
     x_label: str = "X-axis",
     y_label: str = "Y-axis",
     z_label: str = "Z-axis"
-) -> str:
+) -> Image:
     """Create a 3D plot (scatter, surface, or wireframe)."""
     try:
         fig = plt.figure(figsize=(12, 9))
@@ -145,10 +151,11 @@ async def create_3d_plot(
         ax.set_zlabel(z_label)
         ax.set_title(title, fontsize=16, fontweight='bold')
         
-        return save_and_show_plot("3d_plot")
+        return get_plot_as_image("3d_plot")
         
     except Exception as e:
-        return f"Error creating 3D plot: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating 3D plot: {str(e)}")
 
 @mcp.tool()
 async def create_classification_plot(
@@ -158,7 +165,7 @@ async def create_classification_plot(
     title: str = "Classification Scatter Plot",
     x_label: str = "Feature 1",
     y_label: str = "Feature 2"
-) -> str:
+) -> Image:
     """Create a scatter plot with classification categories."""
     try:
         plt.figure(figsize=(10, 8))
@@ -179,10 +186,11 @@ async def create_classification_plot(
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        return save_and_show_plot("classification_plot")
+        return get_plot_as_image("classification_plot")
         
     except Exception as e:
-        return f"Error creating classification plot: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating classification plot: {str(e)}")
 
 @mcp.tool()
 async def create_histogram(
@@ -191,7 +199,7 @@ async def create_histogram(
     title: str = "Histogram",
     x_label: str = "Value",
     y_label: str = "Frequency"
-) -> str:
+) -> Image:
     """Create a histogram."""
     try:
         plt.figure(figsize=(10, 6))
@@ -202,10 +210,11 @@ async def create_histogram(
         plt.grid(True, alpha=0.3, axis='y')
         plt.tight_layout()
         
-        return save_and_show_plot("histogram")
+        return get_plot_as_image("histogram")
         
     except Exception as e:
-        return f"Error creating histogram: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating histogram: {str(e)}")
 
 @mcp.tool()
 async def create_line_plot(
@@ -216,7 +225,7 @@ async def create_line_plot(
     y_label: str = "Y-axis",
     line_style: str = "-",
     color: str = "blue"
-) -> str:
+) -> Image:
     """Create a line chart."""
     try:
         plt.figure(figsize=(10, 6))
@@ -227,10 +236,11 @@ async def create_line_plot(
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        return save_and_show_plot("line_plot")
+        return get_plot_as_image("line_plot")
         
     except Exception as e:
-        return f"Error creating line chart: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating line chart: {str(e)}")
 
 @mcp.tool()
 async def create_heatmap(
@@ -239,7 +249,7 @@ async def create_heatmap(
     y_labels: Optional[List[str]] = None,
     title: str = "Heatmap",
     colormap: str = "viridis"
-) -> str:
+) -> Image:
     """Create a heatmap from 2D data."""
     try:
         plt.figure(figsize=(10, 8))
@@ -254,10 +264,11 @@ async def create_heatmap(
         plt.title(title, fontsize=16, fontweight='bold')
         plt.tight_layout()
         
-        return save_and_show_plot("heatmap")
+        return get_plot_as_image("heatmap")
         
     except Exception as e:
-        return f"Error creating heatmap: {str(e)}"
+        plt.close()
+        raise Exception(f"Error creating heatmap: {str(e)}")
 
 def main():
     """Main entry point for the MCP server."""
