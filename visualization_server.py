@@ -259,6 +259,10 @@ async def create_heatmap(
     except Exception as e:
         return f"Error creating heatmap: {str(e)}"
 
-if __name__ == "__main__":
+def main():
+    """Main entry point for the MCP server."""
     mcp.run(transport='stdio')
+
+if __name__ == "__main__":
+    main()
 

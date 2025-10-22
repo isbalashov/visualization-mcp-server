@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "visualization-mcp-server"
+version = "0.1.0"
+description = "A powerful Model Context Protocol (MCP) server for creating interactive data visualizations"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "isbalashov", email = "isbalashov@users.noreply.github.com" }
+]
+keywords = ["mcp", "visualization", "matplotlib", "data-visualization", "model-context-protocol"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcp>=0.9.0",
+    "matplotlib>=3.5.0",
+    "numpy>=1.21.0",
+    "pandas>=1.3.0",
+    "networkx>=2.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/isbalashov/visualization-mcp-server"
+Repository = "https://github.com/isbalashov/visualization-mcp-server"
+Issues = "https://github.com/isbalashov/visualization-mcp-server/issues"
+
+[project.scripts]
+visualization-mcp-server = "visualization_server:main"
